@@ -68,7 +68,7 @@ public_users.get("/isbn/:isbn", async function (req, res) {
 });
 
 async function getBookByAuthor(author) {
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         if (author) {
             const isbnKey = Object.keys(books).find(
                 (key) =>
@@ -92,7 +92,7 @@ async function getBookByAuthor(author) {
 public_users.get("/author/:author", async function (req, res) {
     const author = req.params.author;
     try {
-        const book = getBookByAuthor(author);
+        const book = await getBookByAuthor(author);
         res.send(book);
     } catch (error) {
         res.status(404).json({ message: error.message });
